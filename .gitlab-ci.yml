@@ -1,16 +1,83 @@
-# You can override the included template(s) by including variable overrides
-# SAST customization: https://docs.gitlab.com/user/application_security/sast/#available-cicd-variables
-# Secret Detection customization: https://docs.gitlab.com/user/application_security/secret_detection/pipeline/configure/
-# Dependency Scanning customization: https://docs.gitlab.com/user/application_security/dependency_scanning/dependency_scanning_sbom/#customizing-analyzer-behavior
-# Container Scanning customization: https://docs.gitlab.com/user/application_security/container_scanning/#customizing-analyzer-behavior
-# Note that environment variables can be set in several places
-# See https://docs.gitlab.com/ci/variables/#cicd-variable-precedence
-stages:
-- test
-- secret-detection
-variables:
-  SECRET_DETECTION_ENABLED: 'true'
-secret_detection:
-  stage: secret-detection
-include:
-- template: Security/Secret-Detection.gitlab-ci.yml
+################################################### 
+# DO NOT EDIT!
+#
+# Changes made to this file may cause unpredictable 
+# behavior, which may include loss of work, failed
+# grades, or other side effects
+#
+###################################################
+
+# use a cached version of the docker image
+# use CI prefix env variable
+
+image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/gbduke/gddi590:1.16
+
+# TODO: see if we can place the branch name regex in a variable
+
+build_job:
+  stage: build
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /^\d{1,6}-\d{1,4}-/ && $CI_PIPELINE_SOURCE != "merge_request_event"'
+  script:
+    - export
+    - echo "Run build command for user $GITLAB_USER_LOGIN"
+    - assignNum=$(echo $CI_COMMIT_BRANCH | grep -o '\-[0-9][0-9][0-9]\-' | sed -r 's/-//g')
+    - echo "Found assignment $assignNum"
+    - assignDir=$(find ~+/src -type d -name "$assignNum*")
+    - echo "Found assignment directory $assignDir"
+    - cd $assignDir
+    - echo "Looking for a build.sh or Makefile"
+    - | 
+      if [ -f "build.sh" ]
+      then 
+        echo "Found build.sh..."
+        chmod 755 ./build.sh
+        ./build.sh
+      else 
+        echo "No build.sh file found"
+      fi
+    - |
+      if [ -f "Makefile" ]
+      then
+        echo "Found Makefile"
+        make
+      else
+        echo "No Makefile found"
+      fi
+    - echo "Looking for a test.sh file"
+    - |
+      if [ -f "test.sh" ]
+      then
+        echo "Found test.sh"
+        echo "Running provided tests..."
+        chmod 755 ./test.sh
+        ./test.sh
+      fi
+    - echo "Build complete!"
+
+# run grade job on PR
+grade_job:
+  stage: build
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /^\d{1,6}-\d{1,4}-/'
+  variables:
+    GDDI_PR_BRANCH: "$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME"
+    GDDI_PR_PROJ_PATH: "$CI_MERGE_REQUEST_PROJECT_PATH"
+    GDDI_PR_PROJ_NAME: "$CI_PROJECT_NAME"
+    GDDI_PR_PROJ_ID: "$CI_PROJECT_ID"
+    GDDI_PR_REF: "$CI_MERGE_REQUEST_REF_PATH"
+    GDDI_PR_ID: "$CI_MERGE_REQUEST_IID"
+    GDDI_USER_ID: "$GITLAB_USER_LOGIN"
+  before_script:
+    - export
+    - cd /grader
+    - chmod -R 755 ./scripts/*.sh
+    - chmod -R 755 ./graders
+  script:
+    - ./scripts/build-src-and-grade.sh
+      
+null_job:
+  when: manual
+  script:
+    - echo "Null Job hack to ensure pipeline runs"
+    - echo "This is a known gitlab issue"

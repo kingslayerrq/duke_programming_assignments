@@ -1,0 +1,22 @@
+# macOS system files
+.DS_Store
+.Trashes
+.Spotlight-V100
+.TemporaryItems
+._*
+
+# vscode folders and files
+.vscode
+*.dSYM
+
+# ignore . files in src directory
+src/**/.*
+
+# ignore bin directories
+bin/
+obj/
+obj/**/*
+
+# ignore specific files
+errors.txt
+*.o
