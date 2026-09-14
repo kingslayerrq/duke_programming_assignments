@@ -3,7 +3,7 @@
 
 struct _retire_info
 {
-    int month;
+    int months;
     double contribution;
     double rate_of_return;
 };
@@ -23,26 +23,26 @@ double helper(int age, double initial, retire_info info){
 void retirement(int startAge, double initial, retire_info working, retire_info retired){
     int curAge = startAge;
     double curSavings = initial;
-    for (int i = 0; i < working.month; i++){
+    for (int i = 0; i < working.months; i++){
         curSavings = helper(curAge, curSavings, working);
         curAge++;
     }
-    for (int i = 0; i < retired.month; i++){
+    for (int i = 0; i < retired.months; i++){
         curSavings = helper(curAge, curSavings, retired);
         curAge++;
     }
 }
 int main(void){
     retire_info working;
-    working.month = 489;
+    working.months = 489;
     working.contribution = 1000;
     working.rate_of_return = 0.045;
     
     retire_info retired;
-    retired.month = 384;
+    retired.months = 384;
     retired.contribution = -4000;
     retired.rate_of_return = 0.01;
 
     retirement(327, 21345, working, retired);
-    
+
 }
