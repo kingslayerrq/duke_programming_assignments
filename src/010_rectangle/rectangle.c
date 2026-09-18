@@ -38,28 +38,31 @@ rectangle canonicalize(rectangle r) {
 }
 rectangle intersection(rectangle r1, rectangle r2) {
   //WRITE THIS FUNCTION
+  r1 = canonicalize(r1);
+  r2 = canonicalize(r2);
+  int r1l = r1.x;
+  int r1r = r1.x + r1.width;
+  int r2l = r2.x;
+  int r2r = r2.x + r2.width;
+  int r1b = r1.y;
+  int r1t = r1.y + r1.height;
+  int r2b = r2.y;
+  int r2t = r2.y + r2.height;
 
-  int r1t, r1r, r2t, r2r;
-  r1t = r1.y + r1.height;
-  r1r = r1.x + r1.width;
-  r2t = r2.y + r2.height;
-  r2r = r2.x + r2.width;
-
-  if ((r1.x < r2.x && r1r < r2.x) || (r2.x < r1.x && r2r < r1.x)
-    || (r1.y < r2.y && r1t < r2.y) || (r2.y < r1.y && r2t < r1.y)){
+  int blx = max(r1l, r2l);
+  int bly = max(r1b, r2b);
+  int trx = min(r1r, r2r);
+  int try = min(r1t, r2t);
+  int ow = trx - blx;
+  int oh = try - bly;
+  if (ow <= 0 || oh <= 0){
     return (rectangle) {
       0, 0, 0, 0
     };
   }
   else{
-    int w, h;
-    int stX, stY;
-    stX = max(r1.x, r2.x);
-    w = min(r1r, r2r) - stX;
-    stY = max(r1.y, r2.y);
-    h = min(r1.y + r1.height, r2.y + r2.height) - stY;
     return (rectangle) {
-      stX, stY, w, h
+      blx, bly, ow, oh
     };
   }
 }
