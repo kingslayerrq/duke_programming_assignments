@@ -1,0 +1,14 @@
+aaaaa bbbbb
+aaaaa bbbbc
+aaabb bbbbc
+12332 12331
+aaaaaa sadasd
+a b
+b1233 asd12
+./asd asd/
+""asd as"
+1 2 3
+1
+AAAaa BBBbb
+!!!!! ?????
+aaaaa bbbbbb
