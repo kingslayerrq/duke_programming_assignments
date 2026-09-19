@@ -27,7 +27,7 @@ compareResults() {
   out=$("./$test" "$val")
 
   # invoke isPrime-correct with $val and capture the output
-  cor=$( "YOUR CODE HERE" )
+  cor=$( "./isPrime-correct" "$val" )
 
   # compare the output
   if [ "$out" != "$cor" ]
@@ -38,8 +38,9 @@ compareResults() {
   return 0
 }
 
-start=0
-end=3
+start=-102
+end=102
+testChar='a'
 
 for ((i=1;i<5;i++))
 do
@@ -61,10 +62,20 @@ do
       continue
     fi
   done
+  
 
   # what other test cases should we consider...?
   # YOUR ADDITIONAL CODE HERE
-
+  compareResults "$i" "$testChar"
+  if [ "$?" = "1" ]
+  then
+    echo "Found broken value $testChar for program $i"
+    echo ""
+    # write broken value $x to file "input.$i"
+    echo "$testChar" > "./input.$i"
+  else
+    continue
+  fi
 done
 
 echo "Exiting tests..."
