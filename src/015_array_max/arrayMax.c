@@ -2,7 +2,17 @@
 #include <stdlib.h>
 
 int* arrayMax(int *array, int n) {
-  return NULL;
+  if (n <= 0) return NULL;
+  int* cur = array;
+  int* curMax = cur;
+  for (int i = 0; i < n; i ++){
+    // printf("cur is %d\n", *cur);
+    if (*cur > *curMax){
+      curMax = cur;
+    }
+    cur ++;
+  };
+  return curMax;
 }
 
 void doTest(int *array, int n) {
