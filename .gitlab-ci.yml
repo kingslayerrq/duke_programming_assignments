@@ -10,7 +10,7 @@
 # use a cached version of the docker image
 # use CI prefix env variable
 
-image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/gbduke/gddi590:1.16
+image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/gbduke/gddi590:1.17
 
 # TODO: see if we can place the branch name regex in a variable
 
