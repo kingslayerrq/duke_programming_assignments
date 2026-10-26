@@ -14,8 +14,7 @@ double Vector2D::getMagnitude() const{
 }
 
 Vector2D Vector2D::operator+(const Vector2D& rhs) const{
-    Vector2D res;
-    // res.initVector(x + rhs.x, y + rhs.y);
+    Vector2D res = Vector2D(x + rhs.x, y + rhs.y);
     return res;
 }
 
