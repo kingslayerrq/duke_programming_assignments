@@ -1,11 +1,12 @@
 #include "IntArray.h"
 #include <assert.h>
 #include <ostream>
+#include <iostream>
 
-IntArray::IntArray() : numElements(0), data(NULL) {
+IntArray::IntArray() : data(NULL), numElements(0) {
 }
 
-IntArray::IntArray(int n) : numElements(n), data(new int[n]()) {
+IntArray::IntArray(int n) : data(new int[n]()), numElements(n) {
 }
 
 IntArray::IntArray(const IntArray& rhs)  {
@@ -43,7 +44,7 @@ int& IntArray::operator[](int index) {
 }
 
 int IntArray::size() const {
-    return static_cast<int>(sizeof(data) / sizeof(data[0]));
+    return numElements;
 }
 
 bool IntArray::operator==(const IntArray& rhs) const {
@@ -69,4 +70,16 @@ bool IntArray::operator!=(const IntArray& rhs) const {
 }
 
 std::ostream& operator<<(std::ostream& s, const IntArray& rhs) {
+    // std::ostringstream oss;
+    s << "{";
+    for (int i = 0; i < rhs.size(); ++i){
+        if (i == rhs.size() - 1){
+            s << rhs[i];
+        }
+        else {
+            s << rhs[i] << ", ";
+        }
+    }
+    s << "}";
+    return s;
 }
