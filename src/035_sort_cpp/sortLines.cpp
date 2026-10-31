@@ -15,16 +15,17 @@ void process(vector<string>& input){
 
 
 int main(int argc, char** argv){
-    vector<string> input = {};
     string line;
     if (argc == 1){
+        vector<string> input;
         while (getline(cin, line)) {
             input.push_back(line);
-            process(input);
         }
+        process(input);
     }
     else{
         for (int i = 1; i < argc; ++i) {
+            vector<string> input;
             string filename = argv[i];
             ifstream file(filename);
             
@@ -35,8 +36,8 @@ int main(int argc, char** argv){
 
             while (getline(file, line)) {
                 input.push_back(line);
-                process(input);
             }
+            process(input);
         }
     }
     return 0;
