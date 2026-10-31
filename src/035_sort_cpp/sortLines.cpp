@@ -6,6 +6,13 @@
 #include <sstream>
 using namespace std;
 
+void process(vector<string>& input){
+    sort(input.begin(), input.end());
+    for (const auto & i: input){
+        cout << i << "\n";
+    }
+}
+
 
 int main(int argc, char** argv){
     vector<string> input = {};
@@ -13,6 +20,7 @@ int main(int argc, char** argv){
     if (argc == 1){
         while (getline(cin, line)) {
             input.push_back(line);
+            process(input);
         }
     }
     else{
@@ -27,12 +35,9 @@ int main(int argc, char** argv){
 
             while (getline(file, line)) {
                 input.push_back(line);
+                process(input);
             }
         }
-    }
-    sort(input.begin(), input.end());
-    for (const auto & i: input){
-        cout << i << "\n";
     }
     return 0;
 }
