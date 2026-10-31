@@ -98,13 +98,13 @@ int Matrix<T>::getColumns() const {
 
 template <typename T>
 const std::vector<T>& Matrix<T>::operator[](int index) const {
-    assert(index < numRows);
+    assert(index >= 0 && index < numRows);
     return *rows[index];
 }
 
 template <typename T>
 std::vector<T>& Matrix<T>::operator[](int index) {
-    assert(index < numRows);
+    assert(index >= 0 && index < numRows);
     return *rows[index];
 }
 
