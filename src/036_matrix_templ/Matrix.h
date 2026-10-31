@@ -137,15 +137,19 @@ template <typename T>
 std::ostream& operator<<(std::ostream& s, const Matrix<T>& rhs) {
     s << "[ ";
     for (int i = 0; i < rhs.getRows(); ++i){
+        s << "{";
         for (size_t j = 0; j < rhs[i].size(); ++j){
             if (j != rhs[i].size()-1){
-                s << rhs[i][j] << " ";
+                s << rhs[i][j] << ", ";
             }
             else{
                 s << rhs[i][j];
             }
         }
-        s << "\n";
+        s << "}";
+        if (i != rhs.getRows() - 1){
+            s << ",\n";
+        }
     }
     s << " ]";
     return s;
