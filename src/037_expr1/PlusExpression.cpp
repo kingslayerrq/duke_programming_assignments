@@ -7,3 +7,8 @@ std::string PlusExpression::toString() const{
     return "(" + lhs->toString() + " + " + rhs->toString() + ")";
 };
 
+PlusExpression::~PlusExpression() {
+    delete lhs;
+    delete rhs;
+}
+

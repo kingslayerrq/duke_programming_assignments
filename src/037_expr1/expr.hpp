@@ -22,5 +22,6 @@ private:
     Expression* rhs;
 public:
     PlusExpression(Expression *lhs, Expression *rhs);
+    ~PlusExpression();
     std::string toString() const;
 };
