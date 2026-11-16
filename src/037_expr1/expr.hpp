@@ -25,3 +25,20 @@ public:
     ~PlusExpression();
     std::string toString() const;
 };
+
+PlusExpression::PlusExpression(Expression *lhs, Expression *rhs):lhs(lhs), rhs(rhs) {};
+
+std::string PlusExpression::toString() const{
+    return "(" + lhs->toString() + " + " + rhs->toString() + ")";
+};
+
+PlusExpression::~PlusExpression() {
+    delete lhs;
+    delete rhs;
+}
+
+NumExpression::NumExpression(long n):val(n) {};
+
+std::string NumExpression::toString() const {
+    return std::to_string(val);
+}
