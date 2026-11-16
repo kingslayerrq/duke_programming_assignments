@@ -1,7 +1,6 @@
 #pragma once
-#include <ostream>
+
 #include <string>
-#include <memory> 
 
 class Expression {
 public:
@@ -14,14 +13,14 @@ private:
     long val;
 public:
     NumExpression(long);
-    std::string toString() const override;
+    std::string toString() const;
 };
 
 class PlusExpression : public Expression {
 private:
-    std::unique_ptr<Expression> lhs;
-    std::unique_ptr<Expression> rhs;
+    Expression* lhs;
+    Expression* rhs;
 public:
     PlusExpression(Expression *lhs, Expression *rhs);
-    std::string toString() const override;
+    std::string toString() const;
 };
