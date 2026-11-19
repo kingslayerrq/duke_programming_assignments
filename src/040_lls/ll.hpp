@@ -2,6 +2,7 @@
 
 #include <assert.h>
 #include <cstdlib>
+#include <iostream>
 #include <exception>
 #include <utility>
 
