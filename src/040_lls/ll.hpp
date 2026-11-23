@@ -163,8 +163,9 @@ public:
         swap(head, other.head);
         swap(tail, other.tail);
     }
-    LinkedList<T>& operator=(const LinkedList<T>& rhs) {
-        *this->swap(rhs);
+    // pass by value
+    LinkedList<T>& operator=(LinkedList<T> rhs) {
+        this->swap(rhs);
         return *this;
     }
     int getSize() const {
