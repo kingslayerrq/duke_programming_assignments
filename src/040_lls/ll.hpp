@@ -5,6 +5,7 @@
 #include <iostream>
 #include <exception>
 #include <utility>
+#include <string>
 
 //YOUR CODE GOES HERE
 class CustomException : public std::exception{
