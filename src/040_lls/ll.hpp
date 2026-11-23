@@ -105,17 +105,18 @@ public:
                 Node* prev = cur->prev;
                 Node* next = cur->next;
                 if (prev == nullptr) {
-                    head = prev;
+                    head = next;
                 }
                 else {
                     prev->next = next;
                 }
                 if (next == nullptr) {
-                    tail = next;
+                    tail = prev;
                 }
                 else {
                     next->prev = prev;
                 }
+                delete cur;
                 return true;
             }
             cur = cur->next;
