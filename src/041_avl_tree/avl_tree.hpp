@@ -7,6 +7,7 @@
 
 class AVLTree
 {
+friend struct AVLTreeTester;
 private:
 
   class AVLNode
@@ -78,12 +79,24 @@ public:
   void deleteNode(int val);
 
   template<typename R>
+  R preOrderFoldHelper(AVLNode *curr, std::function<R(const R&, int)> const& f, const R& acc) {
+    if (curr == nullptr) {
+      return acc;
+    }
+    R newAcc = f(acc, curr->value);
+    newAcc = preOrderFoldHelper(curr->left, f, newAcc);
+    return preOrderFoldHelper(curr->right, f, newAcc);
+  }
+  template<typename R>
   R preOrderFold(std::function<R(const R&, int)> const& f, const R& initial) {
     // Write your code here
+    return preOrderFoldHelper(root, f, initial);
   }
   
 private:
   AVLNode* insertHelper(AVLNode *curr, int val);
   AVLNode* deleteHelper(AVLNode *curr, int val);
+  AVLNode* findMin(AVLNode *curr);
+  int getBalance(AVLNode *curr);
   void deleteTree(AVLNode *root);
 };
