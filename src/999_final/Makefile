@@ -1,5 +1,6 @@
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall -Wextra -g -fsanitize=address,undefined
+LDLIBS = -lncurses
 TARGET = sokoban
 SRCS = main.cpp 
 HEADERS = 
@@ -8,7 +9,7 @@ HEADERS =
 all: $(TARGET)
 
 $(TARGET): $(SRCS) $(HEADERS)
-	$(CXX) $(CXXFLAGS) $(SRCS) -o $(TARGET)
+	$(CXX) $(CXXFLAGS) $(SRCS) -o $(TARGET) $(LDLIBS)
 
 run: $(TARGET)
 	./$(TARGET)
